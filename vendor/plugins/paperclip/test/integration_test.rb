@@ -204,7 +204,7 @@ class IntegrationTest < Test::Unit::TestCase
       @bad_file  = File.new(File.join(FIXTURES_DIR, "bad.png"), 'rb')
 
       assert @dummy.avatar = @file
-      assert @dummy.valid?
+      assert @dummy.valid?, @dummy.errors.full_messages.join(", ")
       assert @dummy.save
     end
 
@@ -363,7 +363,6 @@ class IntegrationTest < Test::Unit::TestCase
                                    :thumb => ["32x32#", :gif] },
                       :storage => :s3,
                       :whiny_thumbnails => true,
-                      # :s3_options => {:logger => Logger.new(StringIO.new)},
                       :s3_credentials => File.new(File.join(File.dirname(__FILE__), "s3.yml")),
                       :default_style => :medium,
                       :bucket => ENV['S3_TEST_BUCKET'],
